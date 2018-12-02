@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -114,6 +115,26 @@ public class Test {
 		System.out.println(menu.stream().map(d -> 1).reduce(Integer::sum));
 		System.out.println(menu.stream().count());
 		
+		//特化流
+		
+		//映射为数值流
+		menu.stream().mapToInt(Dish::getCalories).sum();
+		menu.stream().mapToInt(Dish::getCalories).max();
+		menu.stream().mapToInt(Dish::getCalories).min();
+		menu.stream().mapToInt(Dish::getCalories).average();
+		//....
+		//转换为对象流
+		menu.stream().mapToInt(Dish::getCalories).boxed();
+		
+		//三元素
+		IntStream.rangeClosed(1, 100).boxed().flatMap(a -> IntStream.range(1, 100)
+			.mapToObj(b -> new double[]{a, b, Math.sqrt(a*a + b*b)})
+			.filter(t -> t[2] % 1 == 0));
+		
+//		Stream.	
+		
+		//无限流
+//		Stream.iterate(0, n -> n + 2).limit(10000).forEach(System.out::print);
 	}
 	
 	//Java7
