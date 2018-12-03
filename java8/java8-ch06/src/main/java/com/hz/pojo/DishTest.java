@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.averagingInt;
 import static java.util.stream.Collectors.summarizingInt;
 import static java.util.stream.Collectors.summingInt;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +41,25 @@ public class DishTest {
 				new Dish("chicken", false, 400, Dish.Type.MEAT), new Dish("french", true, 530, Dish.Type.OTHER),
 				new Dish("rice", true, 350, Dish.Type.OTHER), new Dish("season", false, 120, Dish.Type.OTHER),
 				new Dish("pizza", true, 550, Dish.Type.FISH), new Dish("salmon", false, 450, Dish.Type.FISH));
+	}
+	
+	//将数字按照质数和非质数分区
+	@Test
+	public void test10(){
+		
+	}
+	
+	public boolean isPrime(int candidate) {
+		return IntStream.range(2, candidate).noneMatch(i -> candidate % i == 0);
+	}
+	
+	//分区: 分区是分组的特殊情况,由一个谓词(返回一个boolean类型的函数)作为分类函数,即可叫做[分区函数].分区函数返回一个boolean值,则最多可以分为两组[true,false]
+	@Test
+	public void test9(){//分区函数
+		Map<Boolean, List<Dish>> partitioneMenu = menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian));
+		System.out.println(partitioneMenu);
+		List<Dish> list = partitioneMenu.get(true);
+		System.out.println(list);
 	}
 
 	// 多级分组[例:二级分组]
